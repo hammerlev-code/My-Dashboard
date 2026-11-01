@@ -1,1 +1,755 @@
 
+
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#0b1220">
+
+<title>MY DASHBOARD | Wuppertal</title>
+
+<style>
+
+:root {
+
+  --bg:#0b1220;
+
+  --panel:#151f30;
+
+  --panel2:#1c293c;
+
+  --line:#2b3a50;
+
+  --text:#f4f7fc;
+
+  --muted:#9aa9bd;
+
+  --blue:#55a8ff;
+
+  --green:#35d49a;
+
+  --gold:#f4c45e;
+
+  --red:#ff6477;
+
+}
+
+* {box-sizing:border-box}
+
+body {
+
+  margin:0;
+
+  padding:20px;
+
+  background:var(--bg);
+
+  color:var(--text);
+
+  font-family:Arial,sans-serif;
+
+}
+
+.container {max-width:1100px;margin:auto}
+
+header {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  flex-wrap:wrap;
+
+  gap:15px;
+
+  margin-bottom:25px;
+
+}
+
+.logo {font-size:25px;font-weight:800;letter-spacing:1px}
+
+.logo span {color:var(--blue)}
+
+.location {color:var(--muted);font-size:14px}
+
+.clockbox {
+
+  background:linear-gradient(135deg,#172943,#203c5b);
+
+  padding:25px;
+
+  border-radius:20px;
+
+  margin-bottom:20px;
+
+  border:1px solid #34516f;
+
+}
+
+.clock {font-size:clamp(42px,9vw,65px);font-weight:800}
+
+.date {color:#b8c9dc;margin-top:8px}
+
+.grid {
+
+  display:grid;
+
+  grid-template-columns:repeat(2,minmax(0,1fr));
+
+  gap:15px;
+
+}
+
+.card {
+
+  background:var(--panel);
+
+  border:1px solid var(--line);
+
+  border-radius:17px;
+
+  padding:20px;
+
+  min-width:0;
+
+}
+
+.card h3 {
+
+  font-size:15px;
+
+  color:var(--muted);
+
+  margin:0 0 18px;
+
+}
+
+.price {font-size:clamp(25px,5vw,36px);font-weight:800}
+
+.small {font-size:12px;color:var(--muted);margin-top:9px}
+
+.green {color:var(--green)}
+
+.gold {color:var(--gold)}
+
+.blue {color:var(--blue)}
+
+.weather-icon {font-size:38px}
+
+.weather-temp {font-size:35px;font-weight:bold}
+
+.fuel-row {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:8px;
+
+  margin:14px 0;
+
+}
+
+.fuel-name {font-weight:bold}
+
+input {
+
+  width:100%;
+
+  background:#0d1726;
+
+  border:1px solid var(--line);
+
+  color:white;
+
+  border-radius:9px;
+
+  padding:11px;
+
+  margin-top:8px;
+
+  font-size:15px;
+
+}
+
+button {
+
+  background:#2678cf;
+
+  color:white;
+
+  border:0;
+
+  padding:10px 15px;
+
+  border-radius:9px;
+
+  cursor:pointer;
+
+  font-weight:bold;
+
+}
+
+button.secondary {background:#293a50}
+
+.fuel-button {margin-top:10px;width:100%}
+
+.calendar {margin-top:18px}
+
+.cal-head {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:15px;
+
+}
+
+.cal-head button {padding:8px 13px}
+
+.week,.days {
+
+  display:grid;
+
+  grid-template-columns:repeat(7,1fr);
+
+  gap:5px;
+
+  text-align:center;
+
+}
+
+.week div {color:var(--muted);font-size:12px;padding:8px 0}
+
+.days div {
+
+  background:#1c293c;
+
+  border-radius:8px;
+
+  padding:12px 2px;
+
+  font-size:13px;
+
+}
+
+.days .today {
+
+  background:#2678cf;
+
+  color:white;
+
+  font-weight:bold;
+
+}
+
+.days .empty {background:transparent}
+
+.links {
+
+  display:flex;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+
+  margin-top:20px;
+
+}
+
+a {
+
+  color:var(--blue);
+
+  text-decoration:none;
+
+  font-size:13px;
+
+}
+
+footer {
+
+  text-align:center;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  padding:25px 0 10px;
+
+}
+
+@media(max-width:600px) {
+
+  body {padding:14px}
+
+  .grid {grid-template-columns:1fr}
+
+  .card {padding:17px}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+  <div>
+
+    <div class="logo">MY <span>DASHBOARD</span></div>
+
+    <div class="location">WUPPERTAL · DEUTSCHLAND</div>
+
+  </div>
+
+  <div class="location" id="headerDate"></div>
+
+</header>
+
+<section class="clockbox">
+
+  <div class="location">GUTEN TAG!</div>
+
+  <div class="clock" id="clock">--:--:--</div>
+
+  <div class="date" id="fullDate"></div>
+
+</section>
+
+<div class="grid">
+
+  <section class="card">
+
+    <h3>₿ BITCOIN / EUR</h3>
+
+    <div class="price blue" id="btc">Laden...</div>
+
+    <div class="small" id="btcUpdate">Marktdaten werden geladen</div>
+
+  </section>
+
+  <section class="card">
+
+    <h3>🥇 GOLD / EUR</h3>
+
+    <div class="price gold" id="gold">Laden...</div>
+
+    <div class="small" id="goldUpdate">Preis pro Feinunze</div>
+
+  </section>
+
+  <section class="card">
+
+    <h3>🌤️ WETTER IN WUPPERTAL</h3>
+
+    <div class="weather-icon" id="weatherIcon">⛅</div>
+
+    <div class="weather-temp" id="temperature">--°C</div>
+
+    <div id="weatherText" class="small">Wetterdaten werden geladen</div>
+
+    <div class="small" id="wind"></div>
+
+  </section>
+
+  <section class="card">
+
+    <h3>⛽ DIESEL-PREISE</h3>
+
+    <div class="fuel-row">
+
+      <span class="fuel-name">🔵 Aral</span>
+
+      <span id="aralPrice">-- €/L</span>
+
+    </div>
+
+    <input id="aralInput" type="number" step="0.001"
+
+      placeholder="Aral Preis eingeben (€/L)">
+
+    <div class="fuel-row">
+
+      <span class="fuel-name">🟡 Shell</span>
+
+      <span id="shellPrice">-- €/L</span>
+
+    </div>
+
+    <input id="shellInput" type="number" step="0.001"
+
+      placeholder="Shell Preis eingeben (€/L)">
+
+    <button class="fuel-button" onclick="saveFuel()">
+
+      Preise speichern
+
+    </button>
+
+    <div class="small">Manuelle Preiseingabe · Nicht automatisch aktualisiert</div>
+
+    <div class="links">
+
+      <a href="https://www.clever-tanken.de/" target="_blank">Dieselpreise prüfen ↗</a>
+
+      <a href="https://www.aral.de/" target="_blank">Aral ↗</a>
+
+      <a href="https://www.shell.de/" target="_blank">Shell ↗</a>
+
+    </div>
+
+  </section>
+
+</div>
+
+<section class="card calendar">
+
+  <div class="cal-head">
+
+    <button class="secondary" onclick="changeMonth(-1)">‹</button>
+
+    <strong id="monthTitle">Kalender</strong>
+
+    <button class="secondary" onclick="changeMonth(1)">›</button>
+
+  </div>
+
+  <div class="week">
+
+    <div>Mo</div><div>Di</div><div>Mi</div>
+
+    <div>Do</div><div>Fr</div><div>Sa</div><div>So</div>
+
+  </div>
+
+  <div class="days" id="calendarDays"></div>
+
+</section>
+
+<footer>
+
+  MY DASHBOARD · WUPPERTAL<br>
+
+  Daten werden automatisch aktualisiert, sofern verfügbar.
+
+</footer>
+
+</div>
+
+<script>
+
+const $ = id => document.getElementById(id);
+
+function updateClock() {
+
+  const now = new Date();
+
+  $('clock').textContent = now.toLocaleTimeString('de-DE');
+
+  $('fullDate').textContent = now.toLocaleDateString('de-DE',{
+
+    weekday:'long',day:'numeric',month:'long',year:'numeric'
+
+  });
+
+  $('headerDate').textContent = now.toLocaleDateString('de-DE');
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+// BITCOIN
+
+async function loadBitcoin() {
+
+  try {
+
+    const r = await fetch(
+
+      'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur'
+
+    );
+
+    if (!r.ok) throw new Error('API');
+
+    const d = await r.json();
+
+    $('btc').textContent = d.bitcoin.eur.toLocaleString('de-DE',{
+
+      style:'currency',currency:'EUR',maximumFractionDigits:0
+
+    });
+
+    $('btcUpdate').textContent =
+
+      'Letzte Aktualisierung: '+new Date().toLocaleTimeString('de-DE');
+
+  } catch(e) {
+
+    $('btc').textContent='Nicht verfügbar';
+
+    $('btcUpdate').textContent='Bitte später erneut versuchen';
+
+  }
+
+}
+
+// GOLD
+
+async function loadGold() {
+
+  try {
+
+    const [g,e] = await Promise.all([
+
+      fetch('https://api.gold-api.com/price/XAU'),
+
+      fetch('https://open.er-api.com/v6/latest/USD')
+
+    ]);
+
+    if(!g.ok || !e.ok) throw new Error('API');
+
+    const gd = await g.json();
+
+    const ed = await e.json();
+
+    const euro = gd.price * ed.rates.EUR;
+
+    const gram = euro / 31.1034768;
+
+    $('gold').textContent = gram.toLocaleString('de-DE',{
+
+      style:'currency',currency:'EUR',maximumFractionDigits:2
+
+    }) + ' / g';
+
+    $('goldUpdate').textContent =
+
+      'Feinunze: '+euro.toLocaleString('de-DE',{
+
+        style:'currency',currency:'EUR',maximumFractionDigits:2
+
+      });
+
+  } catch(e) {
+
+    $('gold').textContent='Nicht verfügbar';
+
+    $('goldUpdate').textContent='Preisdaten momentan nicht verfügbar';
+
+  }
+
+}
+
+// WEATHER
+
+async function loadWeather() {
+
+  try {
+
+    const url =
+
+      'https://api.open-meteo.com/v1/forecast?latitude=51.2562&longitude=7.1508&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&timezone=Europe%2FBerlin';
+
+    const r = await fetch(url);
+
+    if(!r.ok) throw new Error('Weather');
+
+    const d = await r.json();
+
+    const w = d.current;
+
+    const icons = {
+
+      0:'☀️',1:'🌤️',2:'⛅',3:'☁️',
+
+      45:'🌫️',48:'🌫️',
+
+      51:'🌦️',53:'🌦️',55:'🌧️',
+
+      61:'🌧️',63:'🌧️',65:'🌧️',
+
+      71:'🌨️',73:'❄️',75:'❄️',
+
+      80:'🌦️',81:'🌧️',82:'⛈️',
+
+      95:'⛈️',96:'⛈️',99:'⛈️'
+
+    };
+
+    const descriptions = {
+
+      0:'Klarer Himmel',1:'Überwiegend klar',
+
+      2:'Teilweise bewölkt',3:'Bedeckt',
+
+      45:'Nebel',48:'Nebel',
+
+      51:'Leichter Nieselregen',53:'Nieselregen',
+
+      55:'Starker Nieselregen',61:'Leichter Regen',
+
+      63:'Regen',65:'Starker Regen',
+
+      71:'Leichter Schneefall',73:'Schneefall',
+
+      75:'Starker Schneefall',
+
+      80:'Regenschauer',81:'Regenschauer',
+
+      82:'Starke Regenschauer',95:'Gewitter',
+
+      96:'Gewitter mit Hagel',99:'Starkes Gewitter'
+
+    };
+
+    $('weatherIcon').textContent=icons[w.weather_code] || '🌤️';
+
+    $('temperature').textContent=
+
+      Math.round(w.temperature_2m)+'°C';
+
+    $('weatherText').textContent=
+
+      descriptions[w.weather_code] || 'Aktuelles Wetter';
+
+    $('wind').textContent=
+
+      'Wind: '+w.wind_speed_10m+' km/h · Luftfeuchtigkeit: '+
+
+      w.relative_humidity_2m+'%';
+
+  } catch(e) {
+
+    $('weatherText').textContent='Wetterdaten nicht verfügbar';
+
+  }
+
+}
+
+// DIESEL
+
+function loadFuel() {
+
+  $('aralInput').value=localStorage.getItem('aral') || '';
+
+  $('shellInput').value=localStorage.getItem('shell') || '';
+
+  $('aralPrice').textContent=
+
+    $('aralInput').value ? Number($('aralInput').value).toFixed(3)+' €/L':'-- €/L';
+
+  $('shellPrice').textContent=
+
+    $('shellInput').value ? Number($('shellInput').value).toFixed(3)+' €/L':'-- €/L';
+
+}
+
+function saveFuel() {
+
+  localStorage.setItem('aral',$('aralInput').value);
+
+  localStorage.setItem('shell',$('shellInput').value);
+
+  loadFuel();
+
+  alert('Preise gespeichert!');
+
+}
+
+// CALENDAR
+
+let shownDate = new Date();
+
+function renderCalendar() {
+
+  const year=shownDate.getFullYear();
+
+  const month=shownDate.getMonth();
+
+  const first=new Date(year,month,1);
+
+  const last=new Date(year,month+1,0);
+
+  const offset=(first.getDay()+6)%7;
+
+  $('monthTitle').textContent=shownDate.toLocaleDateString('de-DE',{
+
+    month:'long',year:'numeric'
+
+  });
+
+  const today=new Date();
+
+  let html='';
+
+  for(let i=0;i<offset;i++) html+='<div class="empty"></div>';
+
+  for(let day=1;day<=last.getDate();day++) {
+
+    const isToday=
+
+      day===today.getDate() &&
+
+      month===today.getMonth() &&
+
+      year===today.getFullYear();
+
+    html+=`<div class="${isToday?'today':''}">${day}</div>`;
+
+  }
+
+  $('calendarDays').innerHTML=html;
+
+}
+
+function changeMonth(n) {
+
+  shownDate.setMonth(shownDate.getMonth()+n);
+
+  renderCalendar();
+
+}
+
+renderCalendar();
+
+loadFuel();
+
+loadBitcoin();
+
+loadGold();
+
+loadWeather();
+
+setInterval(loadBitcoin,60000);
+
+setInterval(loadGold,300000);
+
+setInterval(loadWeather,600000);
+
+</script>
+
+</body>
+
+</html>
